@@ -1,0 +1,16 @@
+<h3>{{title}}</h3>
+<ul>
+    <li *ngFor="let name of names" (click)="getTaxForm(name)">{{name}}</li>
+</ul>
+<div *ngIf='selectedName' class="tax-form">
+    <div class="tax-form-content">
+        <h3>{{selectedName}}</h3>
+        <div>
+            <label>Income:</label>
+            <input type="text">
+        </div>
+        <label>Tax:</label>{{tax}}
+        <button (click)="saveForm()">save</button>
+        <button (click)="cancelForm()">cancel</button>
+    </div>
+</div>
