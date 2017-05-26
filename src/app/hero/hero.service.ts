@@ -4,9 +4,11 @@
 
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
 
 //import { HEROES } from './hero.data';
-import { Hero } from './hero';
+import { Hero, HeroTaxReturn } from './hero';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -55,5 +57,31 @@ export class HeroService {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.delete(url, {headers: this.headers})
       .toPromise().then(() => null).catch(this.handleError);
+  }
+
+
+/**hero tax test**/
+
+  taxheroes: Hero[] = [
+    { id: 1, name: 'RubberMan', tid: '082-27-5678'},
+    { id: 2, name: 'Tornado',   tid: '099-42-4321'}
+  ];
+
+  heroTaxReturn: HeroTaxReturn[] = [
+    new HeroTaxReturn(this.taxheroes[0], 2000),
+    new HeroTaxReturn(this.taxheroes[1], 3000)
+  ]
+
+  getTaxHeroes(): Observable<Hero[]> {
+    return new Observable<Hero[]>((observer: Observer<Hero[]>) => {
+      observer.next(this.taxheroes);
+      observer.complete();
+    })
+  }
+
+  getTaxHeroReturn(hero: Hero): Observable<HeroTaxReturn> {
+    return new Observable<HeroTaxReturn>((observer: Observer<HeroTaxReturn>) => {
+      
+    })
   }
 }

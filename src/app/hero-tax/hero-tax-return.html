@@ -1,16 +1,19 @@
 <h3>{{title}}</h3>
 <ul>
-    <li *ngFor="let name of names" (click)="getTaxForm(name)">{{name}}</li>
+    <li *ngFor="let taxhero of taxheroes | async" (click)="showTaxForm(taxhero)">{{taxhero.name}}</li>
 </ul>
-<div *ngIf='selectedName' class="tax-form">
+<div *ngIf='selectedTaxHero' class="tax-form">
     <div class="tax-form-content">
-        <h3>{{selectedName}}</h3>
+        <h3>{{selectedTaxHero.name}}</h3>
         <div>
             <label>Income:</label>
-            <input type="text">
+            <input [(ngModel)]="selectedTaxHero.income">
         </div>
-        <label>Tax:</label>{{tax}}
-        <button (click)="saveForm()">save</button>
-        <button (click)="cancelForm()">cancel</button>
+        <label>Tax: {{selectedTaxHero.taxValue}}</label>
+        <div>
+            <button (click)="onSave()">Save</button>
+            <button (click)="onCancel()">Cancel</button>
+            <button (click)="onClose()">Close</button>
+        </div>
     </div>
 </div>
