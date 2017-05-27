@@ -63,11 +63,11 @@ export class HeroService {
 /**hero tax test**/
 
   taxheroes: Hero[] = [
-    { id: 1, name: 'RubberMan', tid: '082-27-5678'},
-    { id: 2, name: 'Tornado',   tid: '099-42-4321'}
+    { id: 1, name: 'RubberMan'},
+    { id: 2, name: 'Tornado'}
   ];
 
-  heroTaxReturn: HeroTaxReturn[] = [
+  heroTaxReturns: HeroTaxReturn[] = [
     new HeroTaxReturn(this.taxheroes[0], 2000),
     new HeroTaxReturn(this.taxheroes[1], 3000)
   ]
@@ -80,8 +80,28 @@ export class HeroService {
   }
 
   getTaxHeroReturn(hero: Hero): Observable<HeroTaxReturn> {
-    return new Observable<HeroTaxReturn>((observer: Observer<HeroTaxReturn>) => {
-      
+    /*return new Observable<HeroTaxReturn>((observer: Observer<HeroTaxReturn>) => {
+      const htr = this.heroTaxReturns.find(t => t.hero.id === hero.id);
+      observer.next(htr || new HeroTaxReturn(hero, 0));
+      observer.complete();
+    })*/
+    return Observable.create((observer: Observer<HeroTaxReturn>) => {
+      const htr = this.heroTaxReturns.find(t => t.hero.id === hero.id);
+      observer.next(htr || new HeroTaxReturn(hero, 0));
+      observer.complete();
+    });
+  }
+
+  saveTaxHeroReturn(heroTaxReturn: HeroTaxReturn): Observable<HeroTaxReturn> {
+    return Observable.create((observer: Observer<HeroTaxReturn>) => {
+      const htr = this.heroTaxReturns.find(t => t.hero.id === heroTaxReturn.hero.id);
+      if (htr) {
+        heroTaxReturn = Object.assign(htr, heroTaxReturn);
+      } else {
+        this.heroTaxReturns.push(heroTaxReturn);
+      }
+      observer.next(heroTaxReturn);
+      observer.complete();
     })
   }
 }

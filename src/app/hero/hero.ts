@@ -5,18 +5,18 @@
 export class Hero {
   id: number;
   name: string;
-  tid: string;
+  //tid: string;
 }
 
 export class HeroTaxReturn {
   constructor(
-    public user: Hero,
+    public hero: Hero,
     public income = 0
   ){}
 
-  get taxValue() {return this.income*0.1}
+  get taxValue() {return this.income*.1}
 
   clone() {
-    return new HeroTaxReturn(this.user,this.income);
+    return new HeroTaxReturn(this.hero, this.income);
   }
 }

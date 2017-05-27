@@ -10,8 +10,8 @@ export class HeroTaxReturnService {
     constructor(private heroService: HeroService){}
     
     set taxReturn(taxInfo: HeroTaxReturn) {
-        this.originalTaxReturn = taxInfo;
-        this.currentTaxReturn = taxInfo.clone();
+        this.originalTaxReturn = taxInfo.clone();
+        this.currentTaxReturn = taxInfo;
     }
 
     get taxReturn() {
@@ -20,10 +20,15 @@ export class HeroTaxReturnService {
 
     saveTaxReturn() {
         this.taxReturn = this.currentTaxReturn;
+        this.heroService.saveTaxHeroReturn(this.currentTaxReturn).subscribe();
     }
 
     restoreTaxReturn() {
         this.taxReturn = this.originalTaxReturn;
+    }
+
+    getCurrentTaxReturn() {
+        console.log(this.originalTaxReturn,this.currentTaxReturn);
     }
 
     getTaxHeroes() {

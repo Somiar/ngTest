@@ -13,13 +13,14 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 export class HeroTaxReturnComponent implements OnInit{
     title = 'HeroTax';
     names = ['Somiar', 'Angular'];
-    taxheroes: Observable<Hero[]>;
+    taxHeroes: Observable<Hero[]>;
 
-    selectedTaxHero: HeroTaxReturn;
+    selectedTaxHeroReturn: HeroTaxReturn;
+    selectedTaxHero: boolean;
     message = '';
 
     constructor(private heroTaxReturnService: HeroTaxReturnService){
-        this.taxheroes = heroTaxReturnService.getTaxHeroes();
+        this.taxHeroes = heroTaxReturnService.getTaxHeroes();
     }
 
     @Input()
@@ -32,26 +33,36 @@ export class HeroTaxReturnComponent implements OnInit{
     }
 
     showTaxForm(hero: Hero) {
-        //this.heroTaxReturnService.getTaxHeroReturn(hero).sub
-        console.log(hero);
+        this.heroTaxReturnService.getTaxHeroReturn(hero).subscribe(x => {
+            this.selectedTaxHeroReturn = x;
+            this.selectedTaxHero = true;
+            this.heroTaxReturn = this.selectedTaxHeroReturn;
+        });
     }
 
     onSave() {
-        
+        this.heroTaxReturnService.saveTaxReturn();
+        console.log(this.heroTaxReturn);
     }
 
     onCancel() {
-
+        this.heroTaxReturnService.restoreTaxReturn();
     }
 
     @Output() close = new EventEmitter<void>();
 
     onClose() {
         this.close.emit();
+        this.selectedTaxHero = false;
     }
 
     ngOnInit() {
-        console.log(this.taxheroes);
+
+
+    }
+
+    logger(x) {
+        return console.log(x);
     }
 
 }

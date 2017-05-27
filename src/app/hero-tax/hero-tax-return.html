@@ -1,15 +1,15 @@
 <h3>{{title}}</h3>
 <ul>
-    <li *ngFor="let taxhero of taxheroes | async" (click)="showTaxForm(taxhero)">{{taxhero.name}}</li>
+    <li *ngFor="let taxHero of taxHeroes | async" (click)="showTaxForm(taxHero)">{{taxHero.name}}</li>
 </ul>
 <div *ngIf='selectedTaxHero' class="tax-form">
     <div class="tax-form-content">
-        <h3>{{selectedTaxHero.name}}</h3>
+        <h3>{{selectedTaxHeroReturn.hero.name}}</h3>
         <div>
             <label>Income:</label>
-            <input [(ngModel)]="selectedTaxHero.income">
+            <input [(ngModel)]="selectedTaxHeroReturn.income">
         </div>
-        <label>Tax: {{selectedTaxHero.taxValue}}</label>
+        <label>Tax: {{selectedTaxHeroReturn.taxValue}}</label>
         <div>
             <button (click)="onSave()">Save</button>
             <button (click)="onCancel()">Cancel</button>
