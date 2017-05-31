@@ -1,0 +1,41 @@
+<h2>FormTest</h2>
+<form [formGroup]="userForm" novalidate>
+    <div class="form-group">
+        <label class="center-block">
+            Name:
+            <input class="form-control" formControlName="name">
+        </label>
+        <div formGroupName="address" class="well well-lg">
+            <h4>Secret Lair</h4>
+            <div class="form-group">
+                <label class="center-block">
+                    Country:
+                    <input class="form-control" formControlName="country">
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="center-block">
+                    Province:
+                    <select class="form-control" formControlName="province">
+                        <option *ngFor="let prov of province" [value]="prov">{{prov}}</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="center-block">
+                    City:
+                    <input class="form-control" formControlName="city">
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="center-block">
+                    Zip Code:
+                    <input class="form-control" formControlName="zip">
+                </label>
+            </div>
+        </div>
+    </div>
+</form>
+<p>Form value: {{ userForm.value | json }}</p>
+<p>Form status: {{ userForm.status | json }}</p>
+<p>Name value: {{ userForm.get('name').value }}</p>

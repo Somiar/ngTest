@@ -1,8 +1,7 @@
-import { HeroTaxReturnComponent } from './hero-tax/hero-tax-return.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -16,15 +15,19 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 import { HeroListAnimationComponent } from './animations/hero-list-animation.component';
 import { AppRoutingModule } from './route';
 import { HighlightDirective } from './directives/highlight.directive';
+import { HeroTaxReturnComponent } from './hero-tax/hero-tax-return.component';
+import { UserDetailComponent } from './form/user-detail.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    JsonpModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
+    ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,
@@ -35,6 +38,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     HeroListAnimationComponent,
     HighlightDirective,
     HeroTaxReturnComponent,
+    UserDetailComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

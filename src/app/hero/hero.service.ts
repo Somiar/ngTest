@@ -3,7 +3,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
@@ -11,6 +11,8 @@ import { Observer } from 'rxjs/Observer';
 import { Hero, HeroTaxReturn } from './hero';
 
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class HeroService {
@@ -19,7 +21,6 @@ export class HeroService {
   constructor(private http: Http) {}
 
   getHeroes(): Promise<Hero[]> {
-    //return Promise.resolve(HEROES);
     return this.http.get(this.heroesUrl).toPromise()
       .then(response => response.json().data as Hero[])
       .catch(this.handleError);
@@ -31,7 +32,6 @@ export class HeroService {
   }
 
   getHero(id: number): Promise<Hero> {
-    //return this.getHeroes().then(heroes => heroes.find(hero => hero.id === id));
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get(url)
       .toPromise()
@@ -104,4 +104,25 @@ export class HeroService {
       observer.complete();
     })
   }
+
+  /**HTTP Test**/
+  private extractData(res: Response) {
+    let body = res.json();
+    return body || { };
+  }
+  
+  getHeroes1(): Observable<Hero[]> {
+    return this.http.get(this.heroesUrl)
+                    .map(res => res.json().data)
+                    .catch(this.handleError);
+  }
+
+  private options = new RequestOptions({ headers: this.headers})
+
+  create(name: string): Observable<Hero> {
+    return this.http.post(this.heroesUrl, {name}, this.options)
+                    .map(res => res.json().data)
+                    .catch(this.handleError);
+  }
+  
 }

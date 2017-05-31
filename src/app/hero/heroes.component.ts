@@ -1,3 +1,5 @@
+import { RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 /**
  * Created by ayk on 2017/5/9.
  */
@@ -19,15 +21,21 @@ export class HeroesComponent implements OnInit {
   constructor(
     private router: Router,
     private heroService: HeroService) { }
+
   getHeroes(): void {
     this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+
   }
+
   ngOnInit(): void {
-    this.getHeroes();
+    //this.getHeroes();
+    this.getHeroes1();
   }
+
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
   }
+
   gotoDetail(): void {
     this.router.navigate(['/detail', this.selectedHero.id]);
   }
@@ -54,4 +62,24 @@ export class HeroesComponent implements OnInit {
       });
   }
 
+  /**Http Test**/
+  private errorMessage
+
+  getHeroes1() {
+    let a = this.heroService.getHeroes1()
+                            .subscribe(
+                              heroes => this.heroes = heroes,
+                              error => this.errorMessage = <any>error
+                            );
+  }
+
+
+  addHero(name: string) {
+    if (!name) { return; }
+    this.heroService.create(name)
+                    .subscribe(
+                      hero => this.heroes.push(hero),
+                      error => this.errorMessage = <any>error
+                    );
+  }
 }
